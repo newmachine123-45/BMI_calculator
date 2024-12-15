@@ -1,41 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Project2</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: gray;
+            display: flex;
+            justify-content: center;
+        }
+
+        h1 {
+
+            color: black;
+            padding-left: 12 px;
+        }
+
+        button {
+            font-size: large;
+            background-color: blue;
+        }
+    </style>
 </head>
+
 <body>
-    <h2>chai aur java scipt</h2>
-    <button class="start">Start</button>
-    <button class="stop">Stop</button>
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <form>
+            <p><label for="weight">Height in CM:</label><input type="text" id="weight"></p>
+            <p><label for="height">weigh in KG:</label><input type="text" id="height"></p>
+            <button>Calculate</button>
+            <div class="results"></div>
+            <p id="p"></p>
+            <div class="weight-guide">
+                <h3>BMI Weight Guide</h3>
+                <p>Under weight = Less than 18.6</p>
+                <p>Normal Range = 18.6 and 24.9</p>
+                <p>Overweight = Greater than 24.9</p>
+            </div>
+        </form>
+    </div>
+
+    <script>        
+        let form = document.querySelector('form');
+
+        // NOTE::there is a default behaviour of the form to submit so we have to pravent it by using  e.preventDefault();
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let height = parseInt(document.querySelector("#height").value);
+            let weight = parseInt(document.querySelector("#weight").value);
+            let result = document.querySelector('.results');
+           
+            
+            if (height < 0 || isNaN(height) || height === " ") {
+                result.innerHTML = 'please enter a valid height';
+
+            }
+            else if (weight < 0 || isNaN(weight) || weight === " ") {
+                result.innerHTML = 'please enter a valid weight';
+            }
+            else {
+                let BMI = (weight / ((height * height) / 10000)).toFixed(2);
+                result.innerHTML = `<span>${BMI}</span>`
+                // you can also do this as
+                // result.innerHTML=(weight/((height*height)/10000).toFixed(2));
+                let p = document.querySelector('#p');
+               
+                if (BMI < 18.6) {
+                    p.innerHTML = 'under weight'
+                }
+                else if (BMI > 18.6 && BMI < 24.9) {
+                    p.innerHTML = 'Normal Range'
+                }
+                else{
+                    p.innerHTML = 'overweight'
+
+                };
+               
+
+
+            }
+           
+
+        })
+    </script>
 </body>
-<script>
-     // Project 2:: start changing the background color on click of the start button then stop it on the click of the stop button.
-     let randomcolor=function(){
-        let hex='0123456789ABCDE'
-        color='#'
-        
-        for(i=0;i<6;i++){
-            color += Math.floor(Math.random()*10);
-        }
-        return color;
-     }
-     console.log(randomcolor());
-let stopbg;
-     function changebgcolor(){
-       stopbg = setInterval(bgcolor,1000);
-        function bgcolor(){
-            document.body.style.backgroundColor=randomcolor();
-        }
-     }
-     function stopchangingcolor(){
-        clearInterval(stopbg);
-     }
 
-     document.querySelector('.start').addEventListener('click',changebgcolor);
-     document.querySelector('.stop').addEventListener('click',stopchangingcolor);
-
-    //  NOTE::we are not declaring the functions changebgcolor(),stopchangingcolor() ,we are only referencing them bcuz if we do so then When you add () after the function name, you're executing the function immediately. For example, when you do changebgcolor(), it runs right away and doesn't pass the function as a reference. The addEventListener method then gets the result of the function (which is undefined or the result of any return statement in your function), not the function itself.  addEventListener expects a function reference that it can invoke when the event occurs (like the click event). When you pass the function reference, it will be invoked when the event is triggered. If you add (), you're invoking it immediately, which defeats the purpose of attaching it as an event handler.   Pass the function itself to addEventListener, not the result of calling the function. This ensures the function is only executed when the event occurs.
-</script>
 </html>
