@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>chai aur java scipt</h2>
+    <button class="start">Start</button>
+    <button class="stop">Stop</button>
+</body>
+<script>
+     // Project 2:: start changing the background color on click of the start button then stop it on the click of the stop button.
+     let randomcolor=function(){
+        let hex='0123456789ABCDE'
+        color='#'
+        
+        for(i=0;i<6;i++){
+            color += Math.floor(Math.random()*10);
+        }
+        return color;
+     }
+     console.log(randomcolor());
+let stopbg;
+     function changebgcolor(){
+       stopbg = setInterval(bgcolor,1000);
+        function bgcolor(){
+            document.body.style.backgroundColor=randomcolor();
+        }
+     }
+     function stopchangingcolor(){
+        clearInterval(stopbg);
+     }
+
+     document.querySelector('.start').addEventListener('click',changebgcolor);
+     document.querySelector('.stop').addEventListener('click',stopchangingcolor);
+
+    //  NOTE::we are not declaring the functions changebgcolor(),stopchangingcolor() ,we are only referencing them bcuz if we do so then When you add () after the function name, you're executing the function immediately. For example, when you do changebgcolor(), it runs right away and doesn't pass the function as a reference. The addEventListener method then gets the result of the function (which is undefined or the result of any return statement in your function), not the function itself.  addEventListener expects a function reference that it can invoke when the event occurs (like the click event). When you pass the function reference, it will be invoked when the event is triggered. If you add (), you're invoking it immediately, which defeats the purpose of attaching it as an event handler.   Pass the function itself to addEventListener, not the result of calling the function. This ensures the function is only executed when the event occurs.
+</script>
+</html>
